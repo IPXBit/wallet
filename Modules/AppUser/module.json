@@ -1,0 +1,11 @@
+{
+    "name": "AppUser",
+    "alias": "appuser",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\AppUser\\App\\Providers\\AppUserServiceProvider"
+    ],
+    "files": []
+}

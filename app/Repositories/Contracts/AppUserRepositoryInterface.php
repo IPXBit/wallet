@@ -1,7 +1,7 @@
 <?php
 namespace App\Repositories\Contracts;
 
-interface UserRepositoryInterface
+interface AppUserRepositoryInterface
 {
     public function getAuthenticatedUser();
     public function updateWalletBalance($userId, $amount);

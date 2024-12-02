@@ -2,10 +2,11 @@
 namespace App\Repositories;
 
 use App\Models\AppUsers;
+use App\Repositories\Contracts\AppUserRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 
-class AppUserRepository implements UserRepositoryInterface
+class AppUserRepository implements AppUserRepositoryInterface
 {
     public function getAuthenticatedUser()
     {
