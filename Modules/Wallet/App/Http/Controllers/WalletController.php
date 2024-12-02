@@ -3,65 +3,45 @@
 namespace Modules\Wallet\App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
+use App\Services\WalletService;
+use App\Services\DonationService;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Modules\Wallet\App\Services\WalletService as ServicesWalletService;
 
 class WalletController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    protected $walletService;
+    protected $donationService;
+
+    public function __construct(ServicesWalletService $walletService, DonationService $donationService)
     {
-        return view('wallet::index');
+        $this->walletService = $walletService;
+        $this->donationService = $donationService;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function userBalance()
     {
-        return view('wallet::create');
+        $balance = $this->walletService->getUserBalance();
+        return response()->json(['user_balance' => $balance], 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request): RedirectResponse
+    public function addBalance(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'amount' => 'required|numeric|min:0.01',
+        ]);
+        $this->walletService->addBalance($validated['amount'], ['transaction_type' => 'add', 'process' => 'add_balance']);
+        return response()->json(['message' => 'Balance added successfully']);
     }
 
-    /**
-     * Show the specified resource.
-     */
-    public function show($id)
+    public function donation($id, Request $request)
     {
-        return view('wallet::show');
-    }
+        $validated = $request->validate([
+            'amount' => 'required|numeric|min:0.01',
+            'payment_method' => 'required|string|in:wallet,mamopay',
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
-    {
-        return view('wallet::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id): RedirectResponse
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
-    {
-        //
+        $this->donationService->donate($id, $validated['amount'], $validated['payment_method']);
+        return response()->json(['message' => 'Donation successful'], 200);
     }
 }

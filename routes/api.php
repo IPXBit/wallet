@@ -16,15 +16,3 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group([
-    'middleware' => ['tokencheck'],
-
-], function ($router) {
-  ///wallet
-  Route::get('/user-balance', [WalletController::class, 'userBalance']);
-  Route::post('/add-balance', [WalletController::class, 'addBalance']);
-  Route::post('/transfer-balance', [WalletController::class, 'transferBalance']);
-  Route::get('/donation', [WalletController::class, 'GetDonatePartner']);
-  Route::post('donation/{id}', [WalletController::class, 'donation']);
-  Route::post('alert', [AlertController::class, 'store']);
-});

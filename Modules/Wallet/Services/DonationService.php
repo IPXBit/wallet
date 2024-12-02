@@ -1,10 +1,13 @@
 <?php
-namespace App\Services;
+namespace Modules\Wallet\App\Services;
 
 use App\Repositories\Contracts\DonationRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\Contracts\WalletTransactionRepositoryInterface;
 use Illuminate\Support\Facades\DB;
+use Modules\Wallet\App\Repositories\Contracts\AppUserRepositoryInterface;
+use Modules\Wallet\App\Repositories\Contracts\DonationRepositoryInterface as ContractsDonationRepositoryInterface;
+use Modules\Wallet\App\Repositories\Contracts\WalletTransactionRepositoryInterface as ContractsWalletTransactionRepositoryInterface;
 
 class DonationService
 {
@@ -13,9 +16,9 @@ class DonationService
     protected $transactionRepository;
 
     public function __construct(
-        DonationRepositoryInterface $donationRepository,
-        UserRepositoryInterface $userRepository,
-        WalletTransactionRepositoryInterface $transactionRepository
+        ContractsDonationRepositoryInterface $donationRepository,
+        AppUserRepositoryInterface $userRepository,
+        ContractsWalletTransactionRepositoryInterface $transactionRepository
     ) {
         $this->donationRepository = $donationRepository;
         $this->userRepository = $userRepository;

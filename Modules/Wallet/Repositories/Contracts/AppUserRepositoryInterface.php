@@ -1,5 +1,5 @@
 <?php
-namespace App\Repositories\Contracts;
+namespace Modules\Wallet\App\Repositories\Contracts;
 
 interface AppUserRepositoryInterface
 {

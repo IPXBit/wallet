@@ -1,9 +1,11 @@
 <?php
-namespace App\Services;
+namespace Modules\Wallet\App\Services;
 
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\Contracts\WalletTransactionRepositoryInterface;
 use Illuminate\Support\Facades\DB;
+use Modules\Wallet\App\Repositories\Contracts\AppUserRepositoryInterface;
+use Modules\Wallet\App\Repositories\Contracts\WalletTransactionRepositoryInterface as ContractsWalletTransactionRepositoryInterface;
 
 class WalletService
 {
@@ -11,8 +13,8 @@ class WalletService
     protected $transactionRepository;
 
     public function __construct(
-        UserRepositoryInterface $userRepository,
-        WalletTransactionRepositoryInterface $transactionRepository
+        AppUserRepositoryInterface $userRepository,
+        ContractsWalletTransactionRepositoryInterface $transactionRepository
     ) {
         $this->userRepository = $userRepository;
         $this->transactionRepository = $transactionRepository;

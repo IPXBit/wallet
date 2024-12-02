@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Modules\Wallet\App\Http\Controllers\AlertController;
+use Modules\Wallet\App\Http\Controllers\WalletController;
 
 /*
     |--------------------------------------------------------------------------
@@ -14,6 +16,15 @@ use Illuminate\Support\Facades\Route;
     |
 */
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->name('api.')->group(function () {
-    Route::get('wallet', fn (Request $request) => $request->user())->name('wallet');
+Route::group([
+    'middleware' => ['tokencheck'],
+
+], function ($router) {
+  ///wallet
+  Route::get('/user-balance', [WalletController::class, 'userBalance']);
+  Route::post('/add-balance', [WalletController::class, 'addBalance']);
+  Route::post('/transfer-balance', [WalletController::class, 'transferBalance']);
+  Route::get('/donation', [WalletController::class, 'GetDonatePartner']);
+  Route::post('donation/{id}', [WalletController::class, 'donation']);
+  Route::post('alert', [AlertController::class, 'store']);
 });

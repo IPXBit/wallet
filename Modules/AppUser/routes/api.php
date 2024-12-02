@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Modules\AppUser\App\Http\Controllers\AppUserController;
+use Modules\AppUser\App\Http\Controllers\AuthController;
 
 /*
     |--------------------------------------------------------------------------
@@ -14,6 +16,10 @@ use Illuminate\Support\Facades\Route;
     |
 */
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->name('api.')->group(function () {
-    Route::get('appuser', fn (Request $request) => $request->user())->name('appuser');
+Route::group([
+    'prefix' => 'app-user/auth'
+], function ($router) {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/check_number', [AppUserController::class, 'check_number']);
+    Route::post('/check_opt', [AppUserController::class, 'check_opt']);
 });
